@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock, Paper, Scissors</title>
+</head>
+<body>
+    <script>
+        var userScore = 0
+        var computerScore = 0
+    
+        function userPlay(){
+            var userPlay = prompt("Write Rock, Paper or Scissors")
+            return userPlay.charAt(0).toUpperCase() + userPlay.slice(1).toLowerCase()
+        }
+
+        function computerPlay(){
+            var i = Math.floor(Math.random() * 3)
+            var a = ["Rock", "Paper", "Scissors"]
+            return a[i]
+        }
+
+        function playRound(computerPlay, userPlay){
+            if(computerPlay == userPlay) {
+                return "Pfff, it's a draw."
+            } else {
+                if(userPlay == "Rock"){
+                    if(computerPlay == "Paper") {
+                        computerScore++
+                        return computerPlay + " beats " + userPlay + ". You lose!"
+                    } else {
+                        userScore++
+                        return userPlay + " beats " + computerPlay + ". You win!"
+                    }
+                } else if(userPlay == "Paper"){
+                    if(computerPlay == "Scissors") {
+                        computerScore++
+                        return computerPlay + " beats " + userPlay + ". You lose!"
+                    } else {
+                        userScore++
+                        return userPlay + " beats " + computerPlay + ". You win!"
+                    }
+                } else if(userPlay == "Scissors") {
+                    if(computerPlay == "Rock") {
+                        computerScore++
+                        return computerPlay + " beats " + userPlay + ". You lose!"
+                    } else {
+                        userScore++
+                        return userPlay + " beats " + computerPlay + ". You win!"
+                    }
+                } else {
+                    return "Wrong play!!!"
+                }
+            }
+        }
+
+        function game(){
+            for(let i = 1; i <= 5; i++){
+
+                var a = playRound(computerPlay(), userPlay())
+                console.log("Round " + i)
+                console.log(a)
+
+                if(a == "Wrong play!!!"){
+                    console.log("Try again!")
+                    i--
+                } else {
+                    console.log("Score: Me " + computerScore + " - " + userScore + " You")
+                }
+                console.log("")
+            }
+
+            if (computerScore > userScore) {
+                console.log("I'm the boss.")
+            } else {
+                console.log("You are lucky.")
+            }
+        }
+        game()
+    </script>
+</body>
+</html>

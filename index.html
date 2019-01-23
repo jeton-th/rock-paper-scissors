@@ -1,84 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
     <title>Rock, Paper, Scissors</title>
 </head>
+
 <body>
+    <div id="main">
+        <form action="">
+            <h1>Play rock, paper, scissors.</h1>
+
+            <input type="radio" id="rock" name="radios" value="Rock">
+            <label for="rock">Rock</label>
+
+            <input type="radio" id="paper" name="radios" value="Paper">
+            <label for="paper">Paper</label>
+
+            <input type="radio" id="scissors" name="radios" value="Scissors">
+            <label for="scissors">Scissors</label>
+
+            <br><br><br><br>
+
+            <input type="reset" id="reset" value="Restart Game">
+        </form>
+        <p id="round"></p>
+        <h2 id="line"></h2>
+        <p id="score"></p>
+        <h1 id="end"></h1>
+    </div>
+
     <script>
-        var userScore = 0
-        var computerScore = 0
-    
-        function userPlay(){
-            var userPlay = prompt("Write Rock, Paper or Scissors")
-            return userPlay.charAt(0).toUpperCase() + userPlay.slice(1).toLowerCase()
+
+        let i = 1; // Round
+        let userScore = 0;
+        let computerScore = 0;
+
+        const label = document.querySelectorAll("label");
+        const resetButton = document.querySelector("#reset");
+        const round = document.querySelector("#round");
+        const score = document.querySelector("#score");
+        const line = document.querySelector("#line");
+        const end = document.querySelector("#end");
+
+        resetButton.onclick = function reset() {
+            i = 1;
+            userScore = 0;
+            computerScore = 0;
+            round.textContent = "";
+            score.textContent = "";
+            line.textContent = "";
+            end.textContent = "";
+            label[0].style.display = "inline";
+            label[1].style.display = "inline";
+            label[2].style.display = "inline";
         }
 
-        function computerPlay(){
-            var i = Math.floor(Math.random() * 3)
-            var a = ["Rock", "Paper", "Scissors"]
-            return a[i]
+        function computerPlay() {
+            const i = Math.floor(Math.random() * 3);
+            const a = ["Rock", "Paper", "Scissors"];
+            return a[i];
         }
 
-        function playRound(computerPlay, userPlay){
-            if(computerPlay == userPlay) {
-                return "Pfff, it's a draw."
+        function playRound(computerPlay, userPlay) {
+            if (computerPlay == userPlay) {
+                return "Pfff, it's a draw.";
             } else {
-                if(userPlay == "Rock"){
-                    if(computerPlay == "Paper") {
-                        computerScore++
-                        return computerPlay + " beats " + userPlay + ". You lose!"
+                if (userPlay == "Rock") {
+                    if (computerPlay == "Paper") {
+                        computerScore++;
+                        return computerPlay + " beats " + userPlay + ". You lose!";
                     } else {
-                        userScore++
-                        return userPlay + " beats " + computerPlay + ". You win!"
+                        userScore++;
+                        return userPlay + " beats " + computerPlay + ". You win!";
                     }
-                } else if(userPlay == "Paper"){
-                    if(computerPlay == "Scissors") {
-                        computerScore++
-                        return computerPlay + " beats " + userPlay + ". You lose!"
+                } else if (userPlay == "Paper") {
+                    if (computerPlay == "Scissors") {
+                        computerScore++;
+                        return computerPlay + " beats " + userPlay + ". You lose!";
                     } else {
-                        userScore++
-                        return userPlay + " beats " + computerPlay + ". You win!"
+                        userScore++;
+                        return userPlay + " beats " + computerPlay + ". You win!";
                     }
-                } else if(userPlay == "Scissors") {
-                    if(computerPlay == "Rock") {
-                        computerScore++
-                        return computerPlay + " beats " + userPlay + ". You lose!"
+                } else if (userPlay == "Scissors") {
+                    if (computerPlay == "Rock") {
+                        computerScore++;
+                        return computerPlay + " beats " + userPlay + ". You lose!";
                     } else {
-                        userScore++
-                        return userPlay + " beats " + computerPlay + ". You win!"
+                        userScore++;
+                        return userPlay + " beats " + computerPlay + ". You win!";
                     }
-                } else {
-                    return "Wrong play!!!"
                 }
             }
         }
 
-        function game(){
-            for(let i = 1; i <= 5; i++){
+        label.forEach( function(e) {
+            e.onclick = function() {
+                const a = playRound(computerPlay(), this.textContent)
+                line.textContent = a;
+                round.textContent = "Round " + i;
+                score.textContent = "Score: Me " + computerScore + " - " + userScore + " You";
 
-                var a = playRound(computerPlay(), userPlay())
-                console.log("Round " + i)
-                console.log(a)
-
-                if(a == "Wrong play!!!"){
-                    console.log("Try again!")
-                    i--
+                if(i == 5) {
+                    if (computerScore > userScore) {
+                        end.textContent = "Game over. I'm the boss.";
+                    } else {
+                        end.textContent = "Game over. You are lucky.";
+                    }
+                    label[0].style.display = "none";
+                    label[1].style.display = "none";
+                    label[2].style.display = "none";
                 } else {
-                    console.log("Score: Me " + computerScore + " - " + userScore + " You")
+                    i++;
                 }
-                console.log("")
             }
+        })
 
-            if (computerScore > userScore) {
-                console.log("I'm the boss.")
-            } else {
-                console.log("You are lucky.")
-            }
-        }
-        game()
     </script>
 </body>
+
 </html>
